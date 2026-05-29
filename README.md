@@ -34,3 +34,8 @@ El backend modular se estructuró pensando en componentes Serverless desacoplado
  ┣ 📄 server.js         # Servidor Express (Lógica de las funciones Lambda y validaciones)
  ┣ 📄 turnos.json       # Base de datos simulada NoSQL
  ┗ 📄 package.json      # Inventario de dependencias de Node.js
+
+
+### 📊 Diagrama de Arquitectura Cloud
+
+![Diagrama de Arquitectura AWS Serverless](./diagrama-aws.png)

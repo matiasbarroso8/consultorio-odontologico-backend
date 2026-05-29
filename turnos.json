@@ -1,18 +1,129 @@
 [
-  { "fecha": "2026-06-01", "hora": "09:00", "doctora": "A", "especialidad": "Ortodoncia", "estado": "Disponible", "paciente": null },
-  { "fecha": "2026-06-01", "hora": "09:20", "doctora": "A", "especialidad": "Ortodoncia", "estado": "Reservado", "paciente": { "nombre": "Juan Pérez", "dni": "1234", "telefono": "123" } },
-  { "fecha": "2026-06-01", "hora": "09:40", "doctora": "A", "especialidad": "Ortodoncia", "estado": "Disponible", "paciente": null },
-  { "fecha": "2026-06-01", "hora": "10:00", "doctora": "A", "especialidad": "Ortodoncia", "estado": "Disponible", "paciente": null },
-  { "fecha": "2026-06-01", "hora": "09:00", "doctora": "B", "especialidad": "General", "estado": "Disponible", "paciente": null },
-  { "fecha": "2026-06-01", "hora": "09:20", "doctora": "B", "especialidad": "General", "estado": "Disponible", "paciente": null },
-  
-  { "fecha": "2026-06-02", "hora": "09:00", "doctora": "A", "especialidad": "Ortodoncia", "estado": "Disponible", "paciente": null },
-  { "fecha": "2026-06-02", "hora": "09:20", "doctora": "A", "especialidad": "Ortodoncia", "estado": "Disponible", "paciente": null },
-  { "fecha": "2026-06-02", "hora": "09:40", "doctora": "A", "especialidad": "Disponible", "paciente": null },
-  { "fecha": "2026-06-02", "hora": "09:00", "doctora": "B", "especialidad": "General", "estado": "Disponible", "paciente": null },
-  { "fecha": "2026-06-02", "hora": "09:20", "doctora": "B", "especialidad": "General", "estado": "Reservado", "paciente": { "nombre": "Marta Gómez", "dni": "555", "telefono": "444" } },
-
-  { "fecha": "2026-06-03", "hora": "15:00", "doctora": "A", "especialidad": "Ortodoncia", "estado": "Disponible", "paciente": null },
-  { "fecha": "2026-06-03", "hora": "15:20", "doctora": "A", "especialidad": "Ortodoncia", "estado": "Disponible", "paciente": null },
-  { "fecha": "2026-06-03", "hora": "15:40", "doctora": "B", "especialidad": "General", "estado": "Disponible", "paciente": null }
+  {
+    "fecha": "2026-06-01",
+    "hora": "09:00",
+    "doctora": "A",
+    "especialidad": "Ortodoncia",
+    "estado": "Disponible",
+    "paciente": null
+  },
+  {
+    "fecha": "2026-06-01",
+    "hora": "09:20",
+    "doctora": "A",
+    "especialidad": "Ortodoncia",
+    "estado": "Reservado",
+    "paciente": {
+      "nombre": "Juan Pérez",
+      "dni": "1234",
+      "telefono": "123"
+    }
+  },
+  {
+    "fecha": "2026-06-01",
+    "hora": "09:40",
+    "doctora": "A",
+    "especialidad": "Ortodoncia",
+    "estado": "Disponible",
+    "paciente": null
+  },
+  {
+    "fecha": "2026-06-01",
+    "hora": "10:00",
+    "doctora": "A",
+    "especialidad": "Ortodoncia",
+    "estado": "Reservado",
+    "paciente": {
+      "nombre": "juan Gomez",
+      "dni": "36325410",
+      "telefono": "377364"
+    }
+  },
+  {
+    "fecha": "2026-06-01",
+    "hora": "09:00",
+    "doctora": "B",
+    "especialidad": "General",
+    "estado": "Disponible",
+    "paciente": null
+  },
+  {
+    "fecha": "2026-06-01",
+    "hora": "09:20",
+    "doctora": "B",
+    "especialidad": "General",
+    "estado": "Disponible",
+    "paciente": null
+  },
+  {
+    "fecha": "2026-06-02",
+    "hora": "09:00",
+    "doctora": "A",
+    "especialidad": "Ortodoncia",
+    "estado": "Reservado",
+    "paciente": {
+      "nombre": "pedro gomez",
+      "dni": "35362360",
+      "telefono": "377364"
+    }
+  },
+  {
+    "fecha": "2026-06-02",
+    "hora": "09:20",
+    "doctora": "A",
+    "especialidad": "Ortodoncia",
+    "estado": "Disponible",
+    "paciente": null
+  },
+  {
+    "fecha": "2026-06-02",
+    "hora": "09:40",
+    "doctora": "A",
+    "especialidad": "Disponible",
+    "paciente": null
+  },
+  {
+    "fecha": "2026-06-02",
+    "hora": "09:00",
+    "doctora": "B",
+    "especialidad": "General",
+    "estado": "Disponible",
+    "paciente": null
+  },
+  {
+    "fecha": "2026-06-02",
+    "hora": "09:20",
+    "doctora": "B",
+    "especialidad": "General",
+    "estado": "Reservado",
+    "paciente": {
+      "nombre": "Marta Gómez",
+      "dni": "555",
+      "telefono": "444"
+    }
+  },
+  {
+    "fecha": "2026-06-03",
+    "hora": "15:00",
+    "doctora": "A",
+    "especialidad": "Ortodoncia",
+    "estado": "Disponible",
+    "paciente": null
+  },
+  {
+    "fecha": "2026-06-03",
+    "hora": "15:20",
+    "doctora": "A",
+    "especialidad": "Ortodoncia",
+    "estado": "Disponible",
+    "paciente": null
+  },
+  {
+    "fecha": "2026-06-03",
+    "hora": "15:40",
+    "doctora": "B",
+    "especialidad": "General",
+    "estado": "Disponible",
+    "paciente": null
+  }
 ]
