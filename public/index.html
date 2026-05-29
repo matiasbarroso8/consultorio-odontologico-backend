@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centro Odontológico - Agenda de Turnos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans">
+
+    <div class="max-w-4xl mx-auto py-10 px-4">
+        <header class="text-center mb-10">
+            <h1 class="text-4xl font-extrabold text-blue-600 tracking-tight">Centro Odontológico</h1>
+            <p class="text-slate-500 mt-2 text-lg">Gestión autónoma de turnos médicos</p>
+        </header>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="md:col-span-1 bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-fit">
+                <h2 class="text-xl font-bold mb-4 text-slate-700 flex items-center gap-2">⚙️ Configuración</h2>
+                
+                <label class="block text-sm font-semibold text-slate-600 mb-1">1. Especialidad y Doctora</label>
+                <select id="doctora" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl mb-4 focus:ring-2 focus:ring-blue-500 outline-none" onchange="buscarTurnos()">
+                    <option value="A">Dr. A — Ortodoncia (Brackets)</option>
+                    <option value="B">Dr. B — Odontología General</option>
+                </select>
+
+                <label class="block text-sm font-semibold text-slate-600 mb-1">2. Fecha de la Cita</label>
+                <input type="date" id="fecha" value="2026-06-01" class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl mb-4 focus:ring-2 focus:ring-blue-500 outline-none" onchange="buscarTurnos()">
+                
+                <button onclick="buscarTurnos()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 px-4 rounded-xl transition shadow-sm shadow-blue-200">
+                    Consultar Agenda
+                </button>
+            </div>
+
+            <div class="md:col-span-2 space-y-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="text-xl font-bold mb-3 text-slate-700">🕒 Horarios Disponibles</h2>
+                    <p class="text-sm text-slate-400 mb-4">Seleccioná el bloque de 20 minutos que prefieras:</p>
+                    
+                    <div id="lista-horarios" class="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                        </div>
+                    <div id="mensaje-vacio" class="text-center py-6 text-slate-400 hidden">
+                        No hay turnos cargados o disponibles para los filtros seleccionados.
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hidden" id="seccion-reserva">
+                    <h2 class="text-xl font-bold text-slate-700 mb-1">📋 Datos del Paciente</h2>
+                    <p class="text-sm text-emerald-600 font-semibold mb-4 flex items-center gap-1">
+                        ✨ Vas a reservar a las: <span id="hora-seleccionada"></span>
+                    </p>
+                    
+                    <form id="form-registro" onsubmit="confirmarTurno(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 mb-1">Nombre Completo</label>
+                                <input type="text" id="nombre" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Ej. Matías Barroso">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-500 mb-1">DNI (Sin puntos)</label>
+                                <input type="text" id="dni" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Ej. 34123456">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-500 mb-1">Teléfono Móvil</label>
+                            <input type="text" id="telefono" required class="w-full p-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Ej. 3446-556677">
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl transition shadow-sm shadow-emerald-200">
+                            Confirmar Reserva Definitiva
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="mensaje-api" class="mt-6 p-4 rounded-xl text-center font-semibold hidden"></div>
+    </div>
+
+    <script>
+        let horaElegida = "";
+
+        async function buscarTurnos() {
+            const fecha = document.getElementById('fecha').value;
+            const doctora = document.getElementById('doctora').value;
+            const listaDiv = document.getElementById('lista-horarios');
+            const mensajeVacio = document.getElementById('mensaje-vacio');
+            const seccionReserva = document.getElementById('seccion-reserva');
+            const msgApi = document.getElementById('mensaje-api');
+
+            listaDiv.innerHTML = "";
+            seccionReserva.style.filter = "none";
+            seccionReserva.classList.add('hidden');
+            msgApi.classList.add('hidden');
+            horaElegida = "";
+
+            try {
+                const response = await fetch(`/api/turnos?fecha=${fecha}&doctora=${doctora}`);
+                const turnos = await response.json();
+
+                if (turnos.length === 0) {
+                    mensajeVacio.classList.remove('hidden');
+                    return;
+                }
+
+                mensajeVacio.classList.add('hidden');
+
+                turnos.forEach(turno => {
+                    const btn = document.createElement('button');
+                    btn.type = "button";
+                    btn.className = "p-3 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-100 font-medium rounded-xl text-center transition text-sm focus:outline-none target-btn";
+                    btn.innerText = turno.hora;
+                    btn.onclick = (e) => {
+                        // Desmarcar otros botones
+                        document.querySelectorAll('.target-btn').forEach(b => b.classList.replace('bg-blue-600', 'bg-blue-50'));
+                        document.querySelectorAll('.target-btn').forEach(b => b.classList.replace('text-white', 'text-blue-700'));
+                        
+                        // Marcar seleccionado
+                        btn.classList.replace('bg-blue-50', 'bg-blue-600');
+                        btn.classList.replace('text-blue-700', 'text-white');
+                        
+                        seleccionarHora(turno.hora);
+                    };
+                    listaDiv.appendChild(btn);
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function seleccionarHora(hora) {
+            horaElegida = hora;
+            document.getElementById('hora-seleccionada').innerText = hora + " hs";
+            document.getElementById('seccion-reserva').classList.remove('hidden');
+        }
+
+        async function confirmarTurno(e) {
+            e.preventDefault();
+            const msgApi = document.getElementById('mensaje-api');
+
+            const datos = {
+                fecha: document.getElementById('fecha').value,
+                hora: horaElegida,
+                doctora: document.getElementById('doctora').value,
+                nombre: document.getElementById('nombre').value,
+                dni: document.getElementById('dni').value,
+                telefono: document.getElementById('telefono').value
+            };
+
+            try {
+                const response = await fetch('/api/reservar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(datos)
+                });
+
+                const resultado = await response.json();
+
+                msgApi.classList.remove('hidden');
+                if (response.ok) {
+                    msgApi.className = "mt-6 p-4 rounded-xl text-center font-semibold bg-emerald-100 text-emerald-800";
+                    msgApi.innerText = resultado.mensaje;
+                    document.getElementById('form-registro').reset();
+                    buscarTurnos(); 
+                } else {
+                    msgApi.className = "mt-6 p-4 rounded-xl text-center font-semibold bg-red-100 text-red-800";
+                    msgApi.innerText = resultado.error;
+                }
+            } catch (error) {
+                msgApi.classList.remove('hidden');
+                msgApi.className = "mt-6 p-4 rounded-xl text-center font-semibold bg-red-100 text-red-800";
+                msgApi.innerText = "Error al procesar la reserva.";
+            }
+        }
+
+        // Ejecutar búsqueda inicial al cargar
+        window.onload = buscarTurnos;
+    </script>
+</body>
+</html>
