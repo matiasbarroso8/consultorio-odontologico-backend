@@ -37,4 +37,4 @@ El backend modular se estructuró pensando en componentes Serverless desacoplado
 
 ### 📊 Diagrama de Arquitectura Cloud
 
-![Diagrama de Arquitectura AWS Serverless](./diagrama-aws.png)
+![Diagrama de Arquitectura AWS Serverless](diagrama-aws.png)
